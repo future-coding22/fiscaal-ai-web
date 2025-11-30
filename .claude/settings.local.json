@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run seed-db:*)",
+      "Bash(npm start)",
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npx tsc:*)",
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=2048\" npm run build:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh issue create:*)",
+      "Bash(git push:*)",
+      "Bash(gh issue view:*)",
+      "Bash(npm run lint:*)",
+      "Bash(node --check:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git log:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git --no-pager diff HEAD -- src/app/markets/[page]/)",
+      "Bash(npm test:*)",
+      "Bash(npx jest:*)",
+      "Bash(npx next build:*)",
+      "Bash(find:*)",
+      "Bash(node update-templates.js:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npm uninstall:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -14,7 +14,26 @@ RUN npm ci --omit=dev
 # ----------------------------------------------------------------
 FROM node:20-alpine AS builder
 
-WORKDIR /app
+WORKDIR .
+
+# Install Python, pip, and required build tools for Python SDKs
+# Includes 'cargo' (Rust compiler) for dependencies like 'cryptography'.
+RUN apk add --no-cache bash git procps docker-cli curl github-cli \
+        python3 py3-pip \
+        # Packages required for compiling native extensions
+        build-base \
+        python3-dev \
+        libffi-dev \
+        openssl-dev \
+        cargo \
+    && pip install --no-cache-dir --break-system-packages google-genai openai anthropic \
+    && npm install -g @google/gemini-cli @anthropic-ai/claude-code \
+    # Remove build dependencies to keep the final image size small
+    && apk del build-base python3-dev libffi-dev openssl-dev cargo
+
+ENV SHELL=/bin/sh
+
+
 # 1. Copy dependency files (package.json/lock)
 COPY package.json package-lock.json ./
 # 2. Copy source code
@@ -63,12 +82,12 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/.git ./.git
 
 # Expose the default Next.js port
-EXPOSE 3000
+EXPOSE 3045
 
 
 # Set environment variables for production (Legacy format warnings fixed)
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=3045
 
 # Start the Next.js application
 CMD ["npm", "start"]
